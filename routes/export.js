@@ -3,11 +3,28 @@ const { pool } = require('../db/pool');
 
 const router = express.Router();
 
+// Requires a `key` query parameter matching EXPORT_API_KEY, so this public
+// URL can't be spammed by strangers. The key is baked into the export URL
+// you paste into the Madden Companion App, e.g.:
+//   https://your-app.onrender.com/api/madden-export?key=SECRET
+// The app then appends its own params (&type=...&platform=...) to that.
+function requireApiKey(req, res, next) {
+  const expectedKey = process.env.EXPORT_API_KEY;
+  if (!expectedKey) {
+    console.warn('EXPORT_API_KEY is not set; export endpoint is unprotected.');
+    return next();
+  }
+  if (req.query.key !== expectedKey) {
+    return res.status(401).json({ error: 'Missing or invalid key.' });
+  }
+  next();
+}
+
 // The Madden Companion App POSTs one export at a time (e.g. team stats,
 // player stats, standings, rosters, schedules) with the export's type,
 // platform, and league id passed as query string parameters and the data
 // itself as the JSON body.
-router.post('/madden-export', async (req, res) => {
+router.post('/madden-export', requireApiKey, async (req, res) => {
   const exportType = (req.query.type || req.query.stage || 'unknown').toString();
   const platform = req.query.platform ? req.query.platform.toString() : null;
   const leagueId = req.query.leagueId ? req.query.leagueId.toString() : null;
