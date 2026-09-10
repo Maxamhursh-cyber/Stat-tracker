@@ -1,0 +1,97 @@
+:root{
+  --bg:#0D100B;
+  --panel:#161A11;
+  --panel-raised:#1D2216;
+  --line:#2A2F20;
+  --text:#E9E7DC;
+  --muted:#8B9078;
+  --muted-2:#5D6350;
+  --gold:#C9A227;
+  --gold-dim:#8A701E;
+  --good:#5E9B5C;
+  --bad:#B4523F;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100%;}
+body{padding-bottom:60px;}
+h1,h2,h3,.num{font-family:'Oswald',sans-serif;}
+.mono{font-family:'Space Mono',monospace;}
+
+.header{padding:22px 22px 0; border-bottom:1px solid var(--line);}
+.header-top{display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:16px; gap:16px; flex-wrap:wrap;}
+.brand{font-family:'Oswald',sans-serif; font-weight:600; font-size:26px; letter-spacing:0.5px; color:var(--text);}
+.brand span{color:var(--gold);}
+.league-meta{font-family:'Space Mono',monospace; font-size:12px; color:var(--muted); text-align:right; line-height:1.6;}
+.import-btn{background:none; border:1px solid var(--line); color:var(--muted); font-family:'Space Mono',monospace; font-size:11px; padding:6px 10px; cursor:pointer; margin-top:6px; border-radius:2px;}
+.import-btn:hover{border-color:var(--gold); color:var(--gold);}
+
+.myteam-strip{display:flex; align-items:center; gap:18px; padding:14px 0 18px; flex-wrap:wrap;}
+.myteam-badge{width:44px; height:44px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-family:'Oswald'; font-weight:700; font-size:15px; color:#fff; flex-shrink:0;}
+.myteam-name{font-size:17px; font-weight:600;}
+.myteam-record{font-family:'Space Mono'; color:var(--muted); font-size:13px;}
+.myteam-stats{display:flex; gap:26px; margin-left:auto; flex-wrap:wrap;}
+.mini-stat{text-align:right;}
+.mini-stat .v{font-family:'Oswald'; font-size:19px; color:var(--gold);}
+.mini-stat .l{font-family:'Space Mono'; font-size:10px; color:var(--muted-2); text-transform:uppercase;}
+
+.tabs{display:flex; gap:2px; padding:0 22px; border-bottom:1px solid var(--line); background:var(--panel); overflow-x:auto;}
+.tab{font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.5px; color:var(--muted); padding:13px 16px; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap;}
+.tab.active{color:var(--gold); border-bottom-color:var(--gold);}
+.tab:hover:not(.active){color:var(--text);}
+
+.content{max-width:980px; margin:0 auto; padding:24px 22px;}
+.view{display:none;}
+.view.active{display:block;}
+
+.section-title{font-family:'Oswald'; font-size:15px; font-weight:500; color:var(--text); margin-bottom:12px; display:flex; align-items:center; gap:10px;}
+.section-title .count{font-family:'Space Mono'; font-size:11px; color:var(--muted-2);}
+
+.div-group{margin-bottom:22px;}
+.div-label{font-family:'Space Mono'; font-size:11px; color:var(--muted-2); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;}
+table{width:100%; border-collapse:collapse;}
+.standings-table{overflow-x:auto; display:block;}
+.standings-table td, .standings-table th{padding:8px 8px; font-size:13px; text-align:right; border-bottom:1px solid var(--line);}
+.standings-table th{font-family:'Space Mono'; font-size:10px; color:var(--muted-2); text-transform:uppercase; font-weight:400;}
+.standings-table td:first-child, .standings-table th:first-child{text-align:left;}
+.team-cell{display:flex; align-items:center; gap:9px;}
+.dot{width:9px; height:9px; border-radius:2px; flex-shrink:0;}
+.team-row.mine{background:rgba(201,162,39,0.08);}
+.team-row.mine .team-name{color:var(--gold);}
+.streak-w{color:var(--good);}
+.streak-l{color:var(--bad);}
+
+.leader-tabs{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+.leader-tab{font-family:'Space Mono'; font-size:11px; padding:5px 11px; border:1px solid var(--line); color:var(--muted); cursor:pointer; border-radius:2px;}
+.leader-tab.active{border-color:var(--gold); color:var(--gold);}
+.leader-row{display:flex; align-items:center; gap:12px; padding:9px 4px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+.leader-rank{font-family:'Oswald'; font-size:14px; color:var(--muted-2); width:20px;}
+.leader-name{flex:1; font-size:13.5px; min-width:120px;}
+.leader-team{font-family:'Space Mono'; font-size:10px; color:var(--muted); margin-left:6px;}
+.leader-val{font-family:'Oswald'; font-size:15px; color:var(--gold); min-width:60px; text-align:right;}
+.leader-sub{font-family:'Space Mono'; font-size:10px; color:var(--muted); min-width:110px; text-align:right;}
+
+.roster-controls{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+.roster-controls input, .roster-controls select{background:var(--panel-raised); border:1px solid var(--line); color:var(--text); font-family:'Inter'; font-size:12.5px; padding:7px 10px; border-radius:3px;}
+.roster-controls input{flex:1; min-width:140px;}
+.roster-row{display:grid; grid-template-columns:1fr 50px 40px 40px 90px 60px; align-items:center; gap:8px; padding:8px 4px; border-bottom:1px solid var(--line); font-size:13px;}
+.roster-row.header-row{font-family:'Space Mono'; font-size:10px; color:var(--muted-2); text-transform:uppercase;}
+.pos-tag{font-family:'Space Mono'; font-size:10px; color:var(--muted);}
+.ovr-val{font-family:'Oswald'; color:var(--gold); text-align:right;}
+.dev-tag{font-size:10px; font-family:'Space Mono'; text-align:center;}
+.dev-xf{color:#D6472A;}
+.dev-ss{color:#C9A227;}
+.dev-star{color:#7EA8D6;}
+.injury-flag{color:var(--bad); font-family:'Space Mono'; font-size:10px; text-align:right;}
+
+.my-team-picker{display:flex; align-items:center; gap:10px; margin-bottom:16px; font-family:'Space Mono'; font-size:12px; color:var(--muted);}
+.my-team-picker select{background:var(--panel-raised); border:1px solid var(--line); color:var(--text); font-family:'Inter'; font-size:12.5px; padding:7px 10px; border-radius:3px;}
+
+.empty{color:var(--muted); font-size:13px; padding:20px 0; font-family:'Space Mono';}
+
+::-webkit-scrollbar{width:8px; height:8px;}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:4px;}
+
+@media (max-width: 480px){
+  .roster-row{grid-template-columns:1fr 40px 32px 32px 60px;}
+  .roster-row > div:nth-child(6){display:none;}
+}

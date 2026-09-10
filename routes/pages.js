@@ -3,7 +3,14 @@ const { pool } = require('../db/pool');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
+  res.render('dashboard');
+});
+
+// Raw view of every export received, useful for checking exactly what
+// field names your league's Madden Companion App actually sends, so the
+// mappings in lib/normalize.js can be adjusted if needed.
+router.get('/raw', async (req, res) => {
   try {
     const latestByType = await pool.query(
       `SELECT DISTINCT ON (export_type)
@@ -19,7 +26,7 @@ router.get('/', async (req, res) => {
        LIMIT 20`
     );
 
-    res.render('index', {
+    res.render('raw', {
       latestByType: latestByType.rows,
       recent: recent.rows,
     });

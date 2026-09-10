@@ -5,6 +5,7 @@ const path = require('path');
 const { initSchema } = require('./db/pool');
 const exportRoutes = require('./routes/export');
 const pageRoutes = require('./routes/pages');
+const dashboardRoutes = require('./routes/dashboard');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: '10mb' }));
 
 app.use('/api', exportRoutes);
+app.use('/api', dashboardRoutes);
 app.use('/', pageRoutes);
 
 app.get('/healthz', (req, res) => res.json({ ok: true }));

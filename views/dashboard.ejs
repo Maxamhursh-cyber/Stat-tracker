@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snap Count — League Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-top">
+      <div class="brand">SNAP <span>COUNT</span></div>
+      <div class="league-meta">
+        <div id="syncStatus">Loading…</div>
+        <div><button class="import-btn" id="refreshBtn">↻ REFRESH</button></div>
+      </div>
+    </div>
+    <div class="myteam-strip" id="myTeamStrip"></div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-view="standings">STANDINGS</div>
+    <div class="tab" data-view="leaders">WEEKLY LEADERS</div>
+    <div class="tab" data-view="roster">ROSTER</div>
+    <div class="tab" data-view="history">TREND</div>
+  </div>
+
+  <main class="content">
+    <section class="view active" id="view-standings"></section>
+
+    <section class="view" id="view-leaders">
+      <div class="leader-tabs" id="leaderTabs"></div>
+      <div id="leaderList"></div>
+    </section>
+
+    <section class="view" id="view-roster">
+      <div class="roster-controls">
+        <input type="text" id="rosterSearch" placeholder="Search player name...">
+        <select id="rosterTeamFilter"><option value="">All teams</option></select>
+        <select id="rosterPosFilter"><option value="">All positions</option></select>
+        <select id="rosterSort">
+          <option value="ovr">Sort: OVR</option>
+          <option value="name">Sort: Name</option>
+          <option value="age">Sort: Age</option>
+        </select>
+      </div>
+      <div class="roster-row header-row">
+        <div>PLAYER</div><div>POS</div><div>AGE</div><div>OVR</div><div>DEV</div><div>STATUS</div>
+      </div>
+      <div id="rosterList"></div>
+    </section>
+
+    <section class="view" id="view-history">
+      <div class="section-title">Your team, over time</div>
+      <div class="my-team-picker">
+        <label for="myTeamSelect">My team:</label>
+        <select id="myTeamSelect"><option value="">Choose your team…</option></select>
+      </div>
+      <div id="historyList" class="empty">Pick your team above to see its record over time.</div>
+    </section>
+  </main>
+
+  <script src="/dashboard.js"></script>
+</body>
+</html>

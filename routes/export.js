@@ -1,5 +1,7 @@
 const express = require('express');
 const { pool } = require('../db/pool');
+const { STANDINGS_TYPES } = require('../lib/exportTypes');
+const { normalizeStandings } = require('../lib/normalize');
 
 const router = express.Router();
 
@@ -40,6 +42,16 @@ router.post('/madden-export', requireApiKey, async (req, res) => {
        VALUES ($1, $2, $3, $4)`,
       [exportType, platform, leagueId, payload]
     );
+
+    if (STANDINGS_TYPES.includes(exportType.toLowerCase())) {
+      const standings = normalizeStandings(payload);
+      if (standings.length > 0) {
+        await pool.query(`INSERT INTO standings_snapshots (standings) VALUES ($1)`, [
+          JSON.stringify(standings),
+        ]);
+      }
+    }
+
     res.status(201).json({ ok: true });
   } catch (err) {
     console.error('Failed to store export:', err);
