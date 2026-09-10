@@ -81,27 +81,38 @@ adjust those two files to match.
    shows every export received, exactly as stored, which is useful for
    checking real field names once you connect the actual Madden Companion App.
 
-## Deploying to Render
+## Deploying (free): Render + Neon
 
-This repo includes a `render.yaml` Blueprint that provisions:
+Render's own free Postgres database gets deleted after 30 days, so this
+setup uses [Neon](https://neon.tech) for the database instead — it has a
+free tier with no expiration for a project this size — and Render's free
+web service for hosting the app. Both cost nothing to run.
 
-- A free Postgres database (`madden-stat-tracker-db`)
-- A free web service (`madden-stat-tracker`) wired to that database via the
-  `DATABASE_URL` environment variable, with a random `EXPORT_API_KEY`
-  generated automatically
+### 1. Create a free Neon database
 
-To deploy (no coding required, just clicking through Render's dashboard):
+1. Sign up at [neon.tech](https://neon.tech) (GitHub sign-in is easiest).
+2. Create a new project. Neon gives you a connection string that looks like
+   `postgresql://user:password@ep-xxxx.us-east-2.aws.neon.tech/neondb?sslmode=require` —
+   copy it, you'll need it in step 2 below.
+
+### 2. Deploy the web service on Render
+
+This repo includes a `render.yaml` Blueprint for the web service (it no
+longer provisions a database — that's Neon now).
 
 1. Push this repo to GitHub (already done if you're reading this from the
    repo).
 2. In the [Render dashboard](https://dashboard.render.com), choose
-   **New > Blueprint** and point it at this repo. Render reads `render.yaml`
-   and provisions both the web service and the database automatically.
-3. Wait for the first deploy to finish (Render shows build/deploy logs
-   live).
-4. In the Render dashboard, open the web service, go to **Environment**,
-   and copy the auto-generated value of `EXPORT_API_KEY`.
-5. In the Madden Companion App, set the export URL to:
+   **New > Blueprint** and point it at this repo. Render reads `render.yaml`.
+3. When prompted for the `DATABASE_URL` environment variable, paste in the
+   Neon connection string from step 1. (If it doesn't prompt, you can set it
+   afterward: open the web service → **Environment** → add `DATABASE_URL`.)
+4. Apply/create. Wait for the first deploy to finish (Render shows
+   build/deploy logs live) — look for `Madden stat tracker listening on
+   port ...` in the logs.
+5. Open the web service → **Environment**, and copy the auto-generated
+   value of `EXPORT_API_KEY`.
+6. In the Madden Companion App, set the export URL to:
 
    ```
    https://<your-render-service>.onrender.com/api/madden-export?key=<the key you copied>
@@ -109,8 +120,13 @@ To deploy (no coding required, just clicking through Render's dashboard):
 
    The app appends its own `&type=...&platform=...` parameters to whatever
    URL you give it, so this works as-is.
-6. Visit `https://<your-render-service>.onrender.com` in a browser to see
+7. Visit `https://<your-render-service>.onrender.com` in a browser to see
    the latest data after your next export.
+
+**Note on the free web service:** Render spins it down after 15 minutes of
+no traffic and takes ~30-60 seconds to wake back up on the next request —
+so the first page load (or the first export) after a quiet period may be
+slow. That's normal on the free tier, not a bug.
 
 ## Project structure
 
