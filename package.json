@@ -1,0 +1,19 @@
+{
+  "name": "madden-stat-tracker",
+  "version": "1.0.0",
+  "description": "Receives Madden Companion App league exports and displays the latest data.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  }
+}
